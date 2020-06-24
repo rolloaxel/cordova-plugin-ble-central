@@ -67,6 +67,15 @@ module.exports = {
         cordova.exec(successWrapper, failure, 'BLE', 'startScan', [services]);
     },
 
+    // Android only
+    fastScan: function (services, success, failure) {
+        var successWrapper = function(peripheral) {
+            convertToNativeJS(peripheral);
+            success(peripheral);
+        };
+        cordova.exec(successWrapper, failure, 'BLE', 'fastScan', [services]);
+    },
+
     stopScan: function (success, failure) {
         cordova.exec(success, failure, 'BLE', 'stopScan', []);
     },
@@ -245,6 +254,7 @@ module.exports = {
 
 module.exports.withPromises = {
     scan: module.exports.scan,
+    fastScan: module.exports.fastScan,
     startScan: module.exports.startScan,
     startScanWithOptions: module.exports.startScanWithOptions,
     connect: module.exports.connect,

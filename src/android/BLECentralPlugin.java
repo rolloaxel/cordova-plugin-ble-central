@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.cogelec.notificationpush.utils;
+package com.megster.cordova.ble.central;
 
 import android.Manifest;
 import android.app.Activity;
@@ -886,7 +886,11 @@ public class BLECentralPlugin extends CordovaPlugin implements BluetoothAdapter.
             Peripheral peripheral = new Peripheral(deviceToPair);
             peripherals.put(device.getAddress(), peripheral);
 
-            // ... Continue interacting with the paired device.
+            if (discoverCallback != null) {
+                PluginResult result = new PluginResult(PluginResult.Status.OK, peripheral.asJSONObject());
+                result.setKeepCallback(true);
+                discoverCallback.sendPluginResult(result);
+            }
         }
     }
 
